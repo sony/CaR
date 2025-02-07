@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="Reinforcement Learning for Robots without Reward Functions.">
+  <meta property="og:title" content="Constraints as Rewards" />
+  <meta property="og:description" content="Reinforcement Learning for Robots without Reward Functions." />
+  <meta property="og:url" content="URL OF THE WEBSITE" />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+
+  <meta name="twitter:title" content="Constraints as Rewards">
+  <meta name="twitter:description" content="Reinforcement Learning for Robots without Reward Functions.">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/icon.png">
+  <meta name="twitter:card" content="icon.png">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="CaR, Tachyon 3, Reinforcement learning, Legged robot">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>CaR</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Constraints as Rewards: Reinforcement Learning for Robots without
+              Reward Functions</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://github.com/yuishihara" target="_blank">Yu Ishihara</a><sup>1</sup>,
+              </span>
+              <span class="author-block">Noriaki Takasugi<sup>1</sup>,</span>
+              <span class="author-block">Kotaro Kawakami<sup>2</sup>,</span>
+              <span class="author-block">Masaya Kinoshita<sup>1</sup>,</span>
+              <span class="author-block">Kazumi Aoyama<sup>1</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Sony Group Corporation,<sup>2</sup>Sony Global Manufacturing and
+                Operation Corporation</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2501.04228.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <!-- Github link -->
+                <span class="link-block">
+                  <a href="https://github.com/sony/car" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2501.04228" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video-->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video poster="" id="tree" autoplay controls muted loop height="100%">
+          <!-- Your video here -->
+          <source src="static/videos/real/real_experiment_teaser.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Standing-up task performed by our Six-Wheeled-Telescopic-Legged robot: Tachyon 3. <br>
+          Our new approach enables the robot to learn a task without tuning the reward weights manually.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End teaser video -->
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Reinforcement learning has become an essential algorithm for generating complex robotic behaviors.
+              However, to learn such behaviors, it is necessary to design a reward function that describes the task,
+              which often consists of multiple objectives that needs to be balanced.
+              This tuning process is known as reward engineering and typically involves extensive trial-and-error. In
+              this paper, to avoid this trial-and-error process, we propose the concept of <b>C</b>onstraints <b>a</b>s
+              <b>R</b>ewards (<b>CaR</b>).
+              CaR formulates the task objective using multiple constraint functions instead of a reward function and
+              solves a reinforcement learning problem with constraints using the Lagrangian-method. By adopting this
+              approach, different objectives are automatically balanced, because Lagrange multipliers serves as the
+              weights among the objectives. In addition, we will demonstrate that constraints, expressed as
+              inequalities, provide an intuitive interpretation of the optimization target designed for the task. We
+              apply the proposed method to the standing-up motion generation task of a six-wheeled-telescopic-legged
+              robot and demonstrate that the proposed method successfully acquires the target behavior, even though it
+              is challenging to learn with manually designed reward functions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End paper abstract -->
+
+  <!-- Method -->
+  <section class="section hero">
+    <div class="container is-full-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-max-desktop is-full-mobile">
+          <h2 class="title is-3"> Method </h2>
+          <div class="table-container">
+            <table class="table" align="center" style="table-layout: fixed;word-break: break-word; width: 100%;">
+              <thead>
+                <tr>
+                  <th scope="col" style="min-width: 200px;">Conventional reinforcement learning</th>
+                  <th scope="col" style="min-width: 200px;">Constraints as Rewards (CaR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="static/images/eq_rl.png" alt="Conventional RL" class="center" /></td>
+                  <td><img src="static/images/eq_car.png" alt="CaR" class="center" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              In many practical applications, reward functions are designed as a weighted sum of multiple functions.
+              Therefore, conventional reinforcement learning solves the expression on the left.
+              This typically involves extensive trial-and-error to tune the weights.
+              To avoid this trial-and-error process, we propose solving the expression on the right.
+              In the right expression, g_m(s,a) are constraint functions and lambdas are the Lagrange multipliers.
+              The right expression suggests that, if we design the learning objective in terms of constraints,
+              we can obtain the desired policy without tuning the weights among different objectives.
+              We propose composing the learning objective with constraints to train the robot without
+              manual tuning of weight parameters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Method -->
+
+  <!-- Comparisons with manually designed rewards -->
+  <section class="section hero is-light">
+    <div class="container is-full-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-max-desktop is-full-mobile">
+          <h2 class="title is-3"> Comparisons with manually designed rewards </h2>
+          <div class="table-container">
+            <table class="table" align="center" style="table-layout: fixed;word-break: break-word; width: 100%;">
+              <thead>
+                <tr>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Initial pose</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Reward design 1</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Reward design 2</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Reward design 3</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Reward design 4</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Reward design 5</th>
+                  <th scope="col" style="min-width: 200px; vertical-align: middle;">Constraints as Rewards (CaR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center; vertical-align: middle;">Pose 1</td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design1/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design2/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design3/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design4/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design5/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/car/rl-video-episode-0.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center; vertical-align: middle;">Pose 2</td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design1/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design2/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design3/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design4/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/design5/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td>
+                    <video poster="" id="tree" autoplay controls muted loop height="100%">
+                      <source src="static/videos/simulation/car/rl-video-episode-1.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              The above video show the training results of the robot when using manually designed rewards (Reward design
+              1-5) and our proposed Constraints as Rewards. The initial pose is set randomly, and the robot is requested
+              to transition safely to the upright pose. We do not claim that there is no reward function that can
+              achieve this task. However, from the video, we can confirm that designing a reward function is not a
+              straightforward task, and the proposed method is effective in such situations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Comparisons with manually designed rewards -->
+
+  <!-- Learning curve -->
+  <section class="section hero">
+    <div class="container is-full-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-max-desktop is-full-mobile">
+          <h2 class="title is-3"> Learning curve </h2>
+          <div class="table-container">
+            <table class="table" align="center" style="table-layout: fixed;word-break: break-word; width: 60%;">
+              <thead>
+                <tr>
+                  <th scope="col" style="min-width: 200px;">Algorithm learning curves</th>
+                  <th scope="col" style="min-width: 200px;">Weight parameter learning curves</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="static/images/learning_curve_algorithm.png" alt="Algorithm learning curve"
+                      class="center" /></td>
+                  <td><img src="static/images/learning_curve_weights.png" alt="Weight parameter learning curve"
+                      class="center" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              The figure on the left shows the learning curve of the proposed algorithm and comparison algorithms in the
+              task. Proposed CaR with QRSAC-Lagrangian achieves faster and more robust convergence. The right figure
+              shows the
+              tuning results of weight parameters conducted by CaR. We can confirm that weight parameters were tuned
+              dynamically during training.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Learning curve -->
+
+  <!-- Real robot experiments -->
+  <section class="section hero is-light">
+    <div class="hero-body">
+      <div class="container">
+        <div class="column has-text-centered">
+          <h2 class="title is-3"> Real robot experiments </h2>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video1">
+              <video poster="" id="video1" autoplay controls muted loop height="100%">
+                <source src="static/videos/real/real_experiment_pose1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video2">
+              <video poster="" id="video2" autoplay controls muted loop height="100%">
+                <source src="static/videos/real/real_experiment_pose2.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="" id="video3" autoplay controls muted loop height="100%">\
+                <source src="static/videos/real/real_experiment_pose3.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video4">
+              <video poster="" id="video4" autoplay controls muted loop height="100%">\
+                <source src="static/videos/real/real_experiment_pose4.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item item-video5">
+              <video poster="" id="video5" autoplay controls muted loop height="100%">\
+                <source src="static/videos/real/real_experiment_pose5.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Real robot experiments -->
+
+  <!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+        @article{ishihara2025car,
+         title={Constraints as Rewards: Reinforcement Learning for Robots without Reward Functions}, 
+         author={Yu Ishihara and Noriaki Takasugi and Kotaro Kawakami and Masaya Kinoshita and Kazumi Aoyama},
+         journal={arXiv preprint arXiv:2501.04228},
+         year={2025}
+        }
+      </code></pre>
+    </div>
+  </section>
+  <!--End BibTex citation -->
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Statcounter tracking code -->
+
+  <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+  <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
